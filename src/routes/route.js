@@ -104,12 +104,12 @@ router.get('/films/:filmId', function(req, res){
         if(n > array1[i].id){
             a ="you use invalid index please try again!"
         }
-        if(n== array1[i]){
+        if(n== array1[i]-1){
 
          a = array1[i]
 
         }
-        console.log(a)
+       // console.log(a)
     
     }
  
@@ -117,5 +117,14 @@ router.get('/films/:filmId', function(req, res){
         res.send(a)
 
     })     
+
+
+
+
+
 module.exports = router;
 // adding this comment for no reason
+
+
+//www.goodle.com/?name=disha
+// www.google.com/name/:name/:age
