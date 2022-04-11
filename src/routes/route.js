@@ -2,21 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-// router.post('/test-post1', function (req, res) {
-
-
-//  res.send( {  msg: "hi guys"  }   )
-// });
-
-
-
-
-//==============================================================================
-
-
-
-     
-    let players =
+  let players =
     [
     {
     name: "manish",
@@ -41,7 +27,7 @@ const router = express.Router();
     ]
 
 
-    router.post('/test-me', function (req, res) { 
+    router.post('/players', function (req, res) { 
         let data = req.body;
     
         for(let i=0;i<players.length;i++){
