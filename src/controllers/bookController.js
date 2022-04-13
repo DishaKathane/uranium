@@ -1,12 +1,56 @@
 const { count } = require("console")
+const bookModel = require("../models/bookModel")
 const BookModel= require("../models/bookModel")
 
+//=======================1=====================
 const createBook= async function (req, res) {
-    let data= req.body
+    let data=req.body
 
     let savedData= await BookModel.create(data)
     res.send({msg: savedData})
-}
+    }
+
+    module.exports.createBook= createBook
+//======================2====================================
+    const bookList= async function (req, res) {
+        let allBooks = await BookModel.find().select( { bookName: 1, authorName: 1 , _id: 0})
+    
+             res.send({msg: allBooks})
+     }
+     module.exports.bookList= bookList
+
+//==================3======================================
+     const getBooksInYear = async function(req, res){
+       
+         let allBooksY = await BookModel.find({year : {$eq:2021}})
+    
+         res.send({msg: allBooksY})
+     }
+     module.exports.getBooksInYear= getBooksInYear
+
+//==============================4=========================
+    const getParticularBooks = async function(req, res){
+        let allBooksP = await bookModel.find( { 
+                 $or: [{ bookName:  /^hi/i  },{ "year": 2020}]
+            } )
+            res.send({msg: allBooksP})
+
+    }
+    module.exports.getParticularBooks= getParticularBooks
+//================================5===========================
+    const getXINRBooks= async function(req, res){
+        let allBooksX = await bookModel.find(  {"prices.indianPrice ": {$in:["inr100","inr200","inr500"]}})
+       res.send({msg: allBooksX})
+    }
+    module.exports.getXINRBooks= getXINRBooks
+
+ //===================================6======================    
+    const getRandomBooks= async function(req, res){
+        let getRandomBooks = await bookModel.find( {$and: [{stockAvailable: true} , {totalPages  :{$gt: 500}}] } )
+       res.send({msg:getRandomBooks })
+    }
+   
+    module.exports.getRandomBooks= getRandomBooks
 
 const getBooksData= async function (req, res) {
 
@@ -16,7 +60,7 @@ const getBooksData= async function (req, res) {
     
     // let allBooks= await BookModel.find( { 
     //     $or: [ {authorName : "Chetan Bhagat" } , { isPublished: true } , {  "year": 1991 }]
-    // } ).select( { bookName: 1, authorName: 1, _id: 0})n // SELECT keys that we want
+    // } ).select( { bookName: 1, authorName: 1, _id: 0}) // SELECT keys that we want
 
     // let allBooks= await BookModel.find().sort( { sales: -1 }) // SORT
 
@@ -80,6 +124,16 @@ const getBooksData= async function (req, res) {
     res.send({msg: allBooks})
 }
 
-
-module.exports.createBook= createBook
 module.exports.getBooksData= getBooksData
+
+
+
+
+
+
+
+
+
+
+
+
