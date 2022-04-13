@@ -29,13 +29,28 @@ const createBook= async function (req, res) {
      module.exports.getBooksInYear= getBooksInYear
 
 //==============================4=========================
-    const getParticularBooks = async function(req, res){
-        let allBooksP = await bookModel.find( { 
-                 $or: [{ bookName:  /^hi/i  },{ "year": 2020}]
-            } )
-            res.send({msg: allBooksP})
+const getParticularBooks = async function(req,res)
+{
+  let condition = req.body
+  let particularBooks = await bookModel.find(condition)
 
-    }
+  res.send(particularBooks)
+}
+
+    // const getParticularBooks = async function(req, res){
+    //     // {
+    //         let condition = req.body
+    //         let particularBooks = await bookModel.find(condition)
+          
+    //         res.send(particularBooks)
+    //       }
+          
+    //     let allBooksP = await bookModel.find( { 
+    //              $or: [{ bookName:  /^hi/i  },{ "year": 2020}]
+    //         } )
+    //         res.send({msg: allBooksP})
+
+    // }
     module.exports.getParticularBooks= getParticularBooks
 //================================5===========================
     const getXINRBooks= async function(req, res){
@@ -46,7 +61,7 @@ const createBook= async function (req, res) {
 
  //===================================6======================    
     const getRandomBooks= async function(req, res){
-        let getRandomBooks = await bookModel.find( {$and: [{stockAvailable: true} , {totalPages  :{$gt: 500}}] } )
+        let getRandomBooks = await bookModel.find( {$or: [{stockAvailable: true} , {totalPages  :{$gt: 500}}] } )
        res.send({msg:getRandomBooks })
     }
    
