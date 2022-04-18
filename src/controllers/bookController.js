@@ -7,16 +7,17 @@ const publisherModel= require("../models/publisherModel")
 const createBook= async function(req,res){
     let data = req.body
     if(data.author && data.publisher){
-    let aCheck= await authorModel.find({_id:data.author}).select("_id")
-    let pCheck= await publisherModel.find({_id:data.publisher}).select("_id").lean()
-    if(!aCheck.length && !pCheck.length)
+    let aCheck= await authorModel.find({_id:data.author}).select("_id") //find() return an empty arr if nothing is found
+    let pCheck= await publisherModel.find({_id:data.publisher}).select("_id").lean() //lean() is not neccessery hence can be removed
+    if(!aCheck.length && !pCheck.length) //"!acheck.length" is same as "acheck.length === 0"
     res.send({msg:"author and publisher id fields is not match the data, hence invalid!"})
     else if(!aCheck.length && pCheck.length)
     res.send({msg:"author id doesn't match our data, hence invalid!"})
     else if(aCheck.length && !pCheck.length)
     res.send({msg:"publisher id doesn't match to our data, hence invalid!"})
     else{
-        if(!await bookModel.exists(req.body)){
+        if(!await bookModel.exists(req.body)){ //.exists() return the null if nothing is found
+            //console.log(!await bookModel.exists(req.body)) to check what is returns if it has value and if doent have value
             let saveData=await bookModel.create(req.body)
             res.send({msg: saveData})
         } else res.send({msg:"this book already present in the collection!"})
