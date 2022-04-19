@@ -12,20 +12,17 @@ const basicCode= async function(req, res) {
     res.send({ msg: "This is coming from controller (handler)"})
     }
 
+const assignment= async function(req, res){
+    let ip = req.socket.remoteAddress 
+    let datetime =new Date();
+    console.log(datetime, " + ",ip ," /ipadd");
 
+    //console.log(ip)
 
+    res.send({msg :"you get ip address"})
 
-
-
-
-
-
-
-
-
-
-
-
+}
+module.exports.assignment=assignment
 
 
 

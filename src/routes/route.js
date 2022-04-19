@@ -9,10 +9,25 @@ router.get("/test-me", function (req, res) {
     res.send("My first ever api!")
 })
 
+router.get("/test-me1", function(req, res){
+    res.send("My global middleware shows in console with api name test-me1! ")
 
+})
+
+router.get("/test-me2", function(req, res){
+    res.send("My global middleware shows in console with api name test-me2 ! ")
+
+})
+
+router.get("/test-me3", function(req, res){
+    res.send("My global middleware shows in console with api name test-me3 ! ")
+
+})
 
 
 router.post("/createBook", BookController.createBook  )
+
+
 
 
 
@@ -35,6 +50,8 @@ router.post("/createBook", BookController.createBook  )
 //     }
 // }
 
+
+
 // // e.g. restricted and open-to-all API's can be handled like below now:
 // router.get('/homePage', mid1, UserController.feeds)
 // router.get('/profileDetails', mid1, UserController.profileDetails)
@@ -49,7 +66,6 @@ router.post("/createBook", BookController.createBook  )
 
 
 router.get("/basicRoute", commonMW.mid1, commonMW.mid2, commonMW.mid3, commonMW.mid4, UserController.basicCode)
-
 
 
 // router.get("/basicRoute2", commonMW.mid1, UserController.basicCode2)
