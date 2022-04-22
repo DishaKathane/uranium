@@ -66,12 +66,28 @@ const getUserData = async function (req, res) {
 
 const updateUser = async function (req, res) {
 
+let token = req.headers["x-Auth-token"];
+if (!token) token = req.headers["x-auth-token"];
+
+
+if (!token) return res.send({ status: false, msg: "token must be present" });
+
+let decodedToken = jwt.verify(token, "functionup-thorium");
+  if (!decodedToken)
+   return res.send({ status: false, msg: "token is invalid" });
+
+
 
   let userId = req.params.userId;
   let user = await userModel.findById(userId);
   //Return an error if no user with the given id exists in the db
+  
   if (!user) {
     return res.send("No such user exists");
+  }
+
+  if(decodedToken.userId!= userId){
+    res.send({status:false, data:"you are allowed"})
   }
 
   let userData = req.body;
